@@ -24,7 +24,7 @@ var highscore = 0;
 var preState;
 var database;
 var stat, stat2;
-var para,para2;
+var para, para2;
 var battery;
 
 var width, hight;
