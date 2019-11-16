@@ -158,7 +158,7 @@ function draw() {
     // console.log(gamestate);
     if (!paused) {
         // function gator() { alert('Alligator!!!!'); } setTimeout(gator, 7000);
-        background(255, 255, 255);
+        background("#cef4ff");
         rectMode(CENTER);
         noStroke();
         fill("grey")
@@ -247,7 +247,7 @@ function draw() {
             setHeroBehaviour();
             // mouseControl();
             // toxicGroup.destroy()
-            noFill();
+            fill("#fbe843");
             stroke("#13316c");
             rect(200, 290, 300, 380);
             fill("#13316c");
