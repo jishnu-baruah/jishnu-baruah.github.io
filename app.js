@@ -174,6 +174,7 @@ function createButtons() {
         soundButton1.style("visibility", "hidden");
         soundButton2.style("visibility", "hidden");
         para.style("visibility", "hidden");
+         para2.style("visibility","hidden:);
     });
 
     soundButton = createButton("🔈");
@@ -248,6 +249,9 @@ function createButtons() {
     para = createP("Help the slum hero to collect all the garbage.Swipe your finger to control the hero and try to catch all the garbage.  ");
     para.position(85, 300);
     para.style("visibility", "hidden");
+    para2  = createP("Warning!!! Do not catch the toxic waste as they are harmfull.They are always bounded by the red boundary");
+    para2.style("visibility","hidden:);
+    para2.position(85,430);
 
 }
 
@@ -366,6 +370,7 @@ function displaySettingsMenu() {
     // text("Help the slum hero to collect all the garbage.", 75, 320);
     // text("Use your finger to control the hero and try ")
     para.style("visibility", "visible");
+    para2.style("visibility", "visible");
 }
 
 
