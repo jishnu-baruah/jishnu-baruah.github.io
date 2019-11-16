@@ -204,7 +204,7 @@ function draw() {
             createToxic();
             scoreDisplay();
             showStarBar();
-            text(highscore, 100, 100);
+           
             // soundPlay();
             if (garbageGroup.length >= totalDrop) {
                 setTimeout(over, 3000);
