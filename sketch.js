@@ -173,13 +173,13 @@ function draw() {
         rectMode(CENTER);
         noStroke();
         fill("grey")
-        rect(200, 660, 400, 10);
+        rect(width / 2, hero.y + 90, width, 10);
 
         catchGarbage();
         console.log(startButton.width, junkStoreButton.width);
         if (gamestate === "start") {
 
-            dustbin.x = width / 2;
+            dustbin.x = width / 2 - 50;
             wheel.x = dustbin.x - 13
             hero.x = dustbin.x - 70;
             imageMode(CENTER);
@@ -190,8 +190,8 @@ function draw() {
             textSize(12);
             if (frameCount >= 60) {
                 fill(0);
-                image(bubble, hero.x + 50, hero.y - 260, 300, 160);
-                text("Welcome to the slum", hero.x - 20, 380);
+                image(bubble, hero.x + 100, hero.y - 160, 300, 160);
+                text("Welcome to the slum", hero.x - 20, hero.y - 195);
                 if (frameCount >= 80) {
                     if (welcomePlayed === false) {
                         welcome.setVolume(volume2);
@@ -200,9 +200,9 @@ function draw() {
                     }
 
                     if (frameCount >= 160) {
-                        text("Click 'PLAY' to start catching junk drops ", hero.x - 20, 400);
+                        text("Click 'PLAY' to start catching junk drops ", hero.x - 20, hero.y - 175);
                         if (frameCount >= 220) {
-                            text("Or click 'JUNK STORE' to visit 'kabadiwala'", hero.x - 20, 420)
+                            text("Or click 'JUNK STORE' to visit 'kabadiwala'", hero.x - 20, hero.y - 155)
                         }
                     }
                 }
@@ -241,8 +241,8 @@ function draw() {
             if (preState === "settings") {
                 // alert("working")
                 displaySettingsMenu();
-                text(stat, 215, 235);
-                text(stat2, 215, 265);
+                text(stat, soundButton.x + 100, soundButton1.y + 5);
+                text(stat2, soundButton.x + 100, soundButton2.y + 5);
             } else if (preState === "pause") {
                 alert("working")
                 displayMiniMenu();
