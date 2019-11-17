@@ -51,7 +51,7 @@ function scoreDisplay() {
 function createButtons() {
     startButton = createButton("PLAY");
     startButton.class("startButtons");
-    startButton.position((width - 100) / 2, 200);
+    startButton.position((width - 100) / 2, height / 4);
     startButton.style("visibility", "hidden");
     startButton.mousePressed(function () {
         gamestate = "play";
@@ -66,7 +66,7 @@ function createButtons() {
     });
     junkStoreButton = createButton("JUNK STORE");
     junkStoreButton.class("startButtons");
-    junkStoreButton.position((width - junkStoreButton.width) / 2, 250);
+    junkStoreButton.position((width - 100) / 2, (height / 4) + 50);
     junkStoreButton.style("visibility", "hidden");
     junkStoreButton.mousePressed(function () {
         gamestate = "junkPlay";
@@ -166,7 +166,7 @@ function createButtons() {
 
     exitSettingsButton = createButton("❌");
     exitSettingsButton.id("pause");
-    exitSettingsButton.position(330, 115);
+
     exitSettingsButton.style("visibility", "hidden");
     exitSettingsButton.mousePressed(function () {
         gamestate = "start";
@@ -180,7 +180,7 @@ function createButtons() {
     });
 
     soundButton = createButton("🔈");
-    soundButton.position(290, 115);
+
     soundButton.id("pause");
     soundButton.style("visibility", "hidden");
     soundButton.mousePressed(function () {
@@ -203,7 +203,7 @@ function createButtons() {
     })
 
     soundButton1 = createButton("Background");
-    soundButton1.position(280, 150);
+
     soundButton1.class("sound");
     soundButton1.style("visibility", "hidden");
     soundButton1.mousePressed(function () {
@@ -227,7 +227,7 @@ function createButtons() {
         click.play();
     })
     soundButton2 = createButton("Efx");
-    soundButton2.position(280, 180);
+
     soundButton2.class("sound");
     soundButton2.style("visibility", "hidden");
     soundButton2.mousePressed(function () {
@@ -260,9 +260,8 @@ function createButtons() {
 
 
 function createSprites() {
-    ground = createSprite(200, 670, 400, 10);
-    ground.visible = false;
-    dustbin = createSprite(200, 608, 100, 10);
+
+    dustbin = createSprite(width / 2 - 50, height - 90, 100, 10);
     dustbin.addImage("organic", green);
     dustbin.addImage("paper", yellow);
     dustbin.addImage("glass", blue);
@@ -273,14 +272,14 @@ function createSprites() {
     dustbin.addImage("binLeft", binLeft);
     dustbin.scale = 0.3;
     dustbin.setCollider("rectangle", 0, 0, 250, 250);
-    wheel = createSprite(dustbin.x - 13, 665);
+    wheel = createSprite(dustbin.x - 13, dustbin.y + 56);
     wheel.addImage("wheel", wheelImg);
     wheel.scale = 0.3;
 
 
     heroImg2.frameDelay = 4;
     heroImg5.frameDelay = 5;
-    hero = createSprite(130, 570, 100, 10);
+    hero = createSprite(130, dustbin.y - 40, 100, 10);
     hero.addAnimation("standing1", heroImg1);
     hero.addAnimation("standing2", heroImg2);
     hero.addAnimation("walkingb", heroImg6);
@@ -290,6 +289,9 @@ function createSprites() {
 
     hero.scale = 0.3;
 
+
+    ground = createSprite(width / 2, hero.y + 100, width, 10);
+    ground.visible = false;
     barFace = createSprite(350, 50);
     barFace.addAnimation("1", faceBlink1);
     barFace.scale = 0.22;
@@ -340,21 +342,22 @@ function displayMiniMenu() {
 }
 
 function displaySettingsMenu() {
-    rectMode(CORNER);
+    rectMode(CENTER);
     fill("#fbe843");
     stroke("#13316c");
     strokeWeight(2);
-    rect(50, 100, 300, 400);
+    rect(width / 2, height / 2 - 20, 300, 400);
     fill("#ffffff");
-    rect(65, 280, 270, 200);
+    rect(width / 2, height / 2 + 60, 270, 200);
     noStroke();
     fill("#13316c");
-    text("Sound", 150, 205);
+    text("Sound", soundButton.x + 40, soundButton.y + 5);
     textSize(40);
-    text("Settings", 120, 150);
-    soundButton.position(120, 200);
-    soundButton1.position(130, 230);
-    soundButton2.position(130, 260);
+    text("Settings", width / 2 - 80, exitSettingsButton.y + 30);
+    soundButton.position(width / 2 - 60, height / 2 - 120);
+    soundButton1.position(soundButton.x + 10, soundButton.y + 30);
+    soundButton2.position(soundButton.x + 10, soundButton.y + 60);
+    exitSettingsButton.position((width / 2) + 125, height / 2 - 205);
     stat = "mute";
     stat2 = "mute";
     textSize(15);
@@ -368,10 +371,12 @@ function displaySettingsMenu() {
     } else if (volume2 === 1) {
         stat2 = "Mute"
     }
-    text("How to play :", 75, 300);
+    text("How to play :", soundButton.x - 70, height / 2 - 20);
     textSize(13);
     // text("Help the slum hero to collect all the garbage.", 75, 320);
     // text("Use your finger to control the hero and try ")
+    para.position(soundButton.x - 60, height / 2 - 20);
+    para2.position(para.x, para.y + 100)
     para.style("visibility", "visible");
     para2.style("visibility", "visible");
 }
