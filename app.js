@@ -23,14 +23,14 @@ function scoreDisplay() {
     noFill();
     stroke("#13316c");
     strokeWeight(2);
-    rect(200, 22, 330, 30);
+    rect(width / 2, 22, 330, 30);
     fill("#13316c");
     noStroke();
     textSize(20);
     //  fill("red");
-    text("SCORE : " + score, 50, 30);
+    text("SCORE : " + score, width / 2 - 160, 30);
     // fill("white");
-    text("COLLECTED : " + collected + "/" + garbageGroup.length, 180, 30);
+    text("COLLECTED : " + collected + "/" + garbageGroup.length, width / 2 - 20, 30);
     // fill("blue");
     // noFill();
     // strokeWeight(0.3);
@@ -51,7 +51,7 @@ function scoreDisplay() {
 function createButtons() {
     startButton = createButton("PLAY");
     startButton.class("startButtons");
-    startButton.position((width - 100) / 2, height / 4);
+
     startButton.style("visibility", "hidden");
     startButton.mousePressed(function () {
         gamestate = "play";
@@ -66,7 +66,7 @@ function createButtons() {
     });
     junkStoreButton = createButton("JUNK STORE");
     junkStoreButton.class("startButtons");
-    junkStoreButton.position((width - 100) / 2, (height / 4) + 50);
+
     junkStoreButton.style("visibility", "hidden");
     junkStoreButton.mousePressed(function () {
         gamestate = "junkPlay";
@@ -315,30 +315,37 @@ function getRandomNo(minRange, maxRange) {
 
 }
 function displayMiniMenu() {
+    rectMode(CENTER);
+    var x = width / 2 - 110;
+    var y = height / 2 - 170;
     fill("#fbe843");
     stroke("#13316c");
-    strokeWeight(2);
-    rect(50, 100, 300, 400);
+    rect(width / 2, height / 2 - 70, 300, 380);
     fill("#13316c");
-    textSize(35);
+    textSize(30);
     strokeWeight(1);
-    text("Game Paused", 80, 180);
+    text("Game paused", width / 2 - 120, y - 50);
     textSize(20);
-    text("Collected : " + collected + "/" + garbageGroup.length, 90, 220);
-    text("Score : " + score, 90, 250);
-    text("Plastic caught : " + plastic, 90, 280);
-    text("Glass caught : " + glass, 90, 310);
-    text("Metal caught : " + metal, 90, 340);
-    text("Paper caught : " + paper, 90, 370);
-    text("Organic caught : " + organic, 90, 400);
+    text("Collected : " + collected + "/" + totalDrop, x, y);
+    text("Score : " + score, x, y + 30);
+    text("Highscore : " + highscore, x, y + 60);
+    text("Plastic caught : " + plastic, x, y + 90);
+    text("Glass caught : " + glass, x, y + 120);
+    text("Metal caught : " + metal, x, y + 150);
+    text("Paper caught : " + paper, x, y + 180);
+    text("Organic caught : " + organic, x, y + 210);
 
     mainMenuButton.style("visibility", "visible");
     replayButton.style("visibility", "visible");
     exitPauseMenuButton.style("visibility", "visible");
 
-    soundButton.position(290, 115);
-    soundButton1.position(280, 150);
-    soundButton2.position(280, 180);
+    soundButton.position(width / 2 + 90, y - 75);
+    soundButton1.position(soundButton.x + 10, soundButton.y + 30);
+    soundButton2.position(soundButton.x + 10, soundButton.y + 60);
+    exitPauseMenuButton.position(soundButton.x + 40, soundButton.y);
+    mainMenuButton.position(width / 2 - 130, height / 2 + 90);
+    replayButton.position(width / 2 + 20, height / 2 + 90);
+
 }
 
 function displaySettingsMenu() {
@@ -423,4 +430,28 @@ function setButtonColour() {
     } if (volume2 === 0) {
         soundButton2.style('background-color', '#ff0000');
     }
+}
+function displayOverMenu() {
+    var x = width / 2 - 110;
+    var y = height / 2 - 150;
+    fill("#fbe843");
+    stroke("#13316c");
+    rect(width / 2, height / 2 - 70, 300, 380);
+    fill("#13316c");
+    textSize(50);
+    strokeWeight(1);
+    text("Drop over", width / 2 - 120, y - 50);
+    textSize(20);
+    text("Collected : " + collected + "/" + totalDrop, x, y);
+    text("Score : " + score, x, y + 30);
+    text("Highscore : " + highscore, x, y + 60);
+    text("Plastic caught : " + plastic, x, y + 90);
+    text("Glass caught : " + glass, x, y + 120);
+    text("Metal caught : " + metal, x, y + 150);
+    text("Paper caught : " + paper, x, y + 180);
+    text("Organic caught : " + organic, x, y + 210);
+
+
+    mainMenuButton.position(width / 2 - 130, height / 2 + 90);
+    replayButton.position(width / 2 + 20, height / 2 + 90);
 }
