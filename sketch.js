@@ -13,7 +13,7 @@ var replayButton, mainMenuButton;
 var pauseButton, soundButton, settingsButton, exitPauseMenuButton, exitSettingsButton;
 var previousNo = 0;
 var paused = false;
-var totalDrop = 15;
+var totalDrop = 50;
 var totalGarbage = 0;
 var gcircle, gcircleGroup;
 var p1 = p2 = p3 = p4 = false;
@@ -147,13 +147,6 @@ function setup() {
 }
 
 
-
-
-
-
-
-
-
 function draw() {
     barFace.visible = false;
     backgroundSound.setVolume(volume);
@@ -164,13 +157,23 @@ function draw() {
 
     width = windowWidth;
     height = windowHeight;
+    dustbin.y = height - 90;
+    hero.y = dustbin.y - 40;
+    wheel.y = dustbin.y + 56;
+    ground.y = hero.y + 100;
+    wheel.x = dustbin.x - 13;
 
-    resizeCanvas(width, height)
+    resizeCanvas(width, height);
+
 
     if (!paused) {
         // function gator() { alert('Alligator!!!!'); } setTimeout(gator, 7000);
         background("#cef4ff");
         rectMode(CENTER);
+        noFill();
+        strokeWeight(2);
+        stroke(0);
+        rect(width / 2, height / 2, 400, height);
         noStroke();
         fill("grey")
         rect(width / 2, hero.y + 90, width, 10);
@@ -178,7 +181,8 @@ function draw() {
         catchGarbage();
         console.log(startButton.width, junkStoreButton.width);
         if (gamestate === "start") {
-
+            startButton.position((width - 100) / 2, height / 4);
+            junkStoreButton.position((width - 100) / 2, (height / 4) + 50);
             dustbin.x = width / 2 - 50;
             wheel.x = dustbin.x - 13
             hero.x = dustbin.x - 70;
@@ -258,131 +262,55 @@ function draw() {
             setHeroBehaviour();
             // mouseControl();
             // toxicGroup.destroy()
-            fill("#fbe843");
-            stroke("#13316c");
-            rect(200, 290, 300, 380);
-            fill("#13316c");
-            textSize(50);
-            strokeWeight(1);
-            text("Drop over", 80, 160);
-            textSize(20);
-            text("Collected : " + collected + "/" + totalDrop, 90, 200);
-            text("Score : " + score, 90, 230);
-            text("Highscore : " + highscore, 90, 260);
-            text("Plastic caught : " + plastic, 90, 290);
-            text("Glass caught : " + glass, 90, 320);
-            text("Metal caught : " + metal, 90, 350);
-            text("Paper caught : " + paper, 90, 380);
-            text("Organic caught : " + organic, 90, 410);
-
+            displayOverMenu();
             replayButton.style("visibility", "visible");
             mainMenuButton.style("visibility", "visible");
         }
 
-        // if (gamestate = "junkPlay") {
-        //     for (var i = 0; i <= 5; i++) {
-        //         var x = i + i * 66;
+        if (gamestate === "junkPlay") {
+            for (var i = 0; i <= 5; i++) {
+                var x = i + i * 66;
 
-        //         imageMode(CORNER);
-        //         image(trackImg, x, 0, 65, 660)
-        //     }
-        // }
+                imageMode(CORNER);
+                image(trackImg, x, 0, 65, 660)
+            }
+        }
 
         drawSprites();
         //   console.log(plastic, glass, metal, paper, organic);
 
     }
     if (paused) {
+        displayMiniMenu();
         if (gamestate === "sound") {
             displaySoundMenu();
-            if (preState === "settings") {
-                displaySettingsMenu();
-            } else if (preState === "pause") {
-                displayMiniMenu();
-            }
+
+            displayMiniMenu();
         }
     }
 
 }
 
-function createToxic() {
-    var no = Math.round(random(1, 2));
-    if (frameCount % 180 === 0) {
-        var toxic = createSprite(100, 100);
-        toxic.x = Math.round(random(50, 350));
-        toxic.addImage("toxic", toxicImg);
-        toxic.addImage("battery", battery);
-        if (no === 1) {
-            toxic.changeAnimation("toxic");
-        } else if (no === 2) {
-            toxic.changeAnimation("battery");
 
-
-        }
-        toxic.scale = 0.05;
-        toxic.lifetime = 80;
-        toxic.depth = dustbin.depth - 1;
-        toxic.velocityY = 7;
-        toxic.rotationSpeed = Math.round(random(-15, 15));
-        toxicGroup.push(toxic);
-        gcircle = createSprite(toxic.x, toxic.y);
-        gcircle.velocityY = toxic.velocityY;
-        gcircle.lifetime = 80;
-        gcircle.scale = 0.3;
-        gcircle.addAnimation("1", gcircleImg);
-        gcircle.rotationSpeed = 2;
-        gcircle.depth = toxic.depth - 1;
-        gcircle.setCollider("circle", 0, 0, 80)
-        // gcircle.debug = true;
-        gcircleGroup.push(gcircle);
-
-        tutu.play();
-    }
-    for (var i = 0; i <= toxicGroup.length; i++) {
-
-        var temp = toxicGroup.get(i);
-        var temp2 = gcircleGroup.get(i);
-        if (temp !== undefined) {
-            if (temp.isTouching(dustbin)) {
-                //dustbin.destroy();
-                temp.destroy();
-                tutu.stop();
-                // alert("woho");
-                if (!temp.isTouching(dustbin)) {
-                    o_ou.play();
-                    dustbin.changeAnimation("toxic");
-                    score = score - 1;
-                }
-            }
-        }
-        if (temp2 !== undefined) {
-            if (temp2.isTouching(dustbin)) {
-                //dustbin.destroy();
-                temp2.destroy();
-                // alert("woho");
-            }
-        }
-    }
-}
 function showStarBar() {
     barFace.visible = true;
     noFill()
     stroke("black");
     strokeWeight(2);
-    rect(200, 50, 300, 20);
+    rect(width / 2, 50, 300, 20);
     // fill("yellow");
     rectMode(CORNER);
     noStroke();
     getBarFace();
     // console.log(calculateBarWidth());
-    rect(51, 42, calculateBarWidth(), 16);
-    barFace.x = calculateBarWidth() + 60;
+    rect(width / 2 - 150, 42, calculateBarWidth(), 16);
+    barFace.x = calculateBarWidth() + (width / 2 - 160);
 
     //  fill("green");
     stroke("black");
     strokeWeight(2);
-    line(111, 42, 111, 58);
-    line(221, 42, 221, 58);
+    line(width / 2 - 90, 42, width / 2 - 90, 58);
+    line(width / 2 + 20, 42, width / 2 + 20, 58);
 
     rectMode(CENTER);
     noStroke();
