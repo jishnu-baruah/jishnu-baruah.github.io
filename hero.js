@@ -1,4 +1,3 @@
-
 function catchGarbage() {
     for (var i = 0; i <= garbageGroup.length; i++) {
         var temp = garbageGroup.get(i);
@@ -12,7 +11,10 @@ function catchGarbage() {
             if (temp.isTouching(ground)) {
 
                 temp.velocityY = 0;
-                // temp.lifetime = 10;
+                temp.life = 3;
+
+
+                console.log(temp)
                 if (temp.isTouching(ground) === false) {
                     totalGarbage++;
                 }
@@ -106,12 +108,12 @@ function dustbinControl() {
         wheel.rotationSpeed = 0;
 
     }
-    if (dustbin.x > 400) {
-        dustbin.x = 399;
+    if (dustbin.x > width / 2 + 200) {
+        dustbin.x = width / 2 + 199;
         wheel.rotationSpeed = 0;
         wheel.velocityX = 0;
-    } else if (dustbin.x < 0) {
-        dustbin.x = 1;
+    } else if (dustbin.x < width / 2 - 200) {
+        dustbin.x = width / 2 - 199;
         wheel.rotationSpeed = 0;
         wheel.velocityX = 0;
     }
