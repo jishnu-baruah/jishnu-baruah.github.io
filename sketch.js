@@ -27,7 +27,7 @@ var stat, stat2;
 var para, para2;
 var battery;
 
-var width, hight;
+var width, height;
 
 function preload() {
     bottleImg = loadImage("bottle.png");
@@ -105,7 +105,12 @@ function preload() {
 
 
 function setup() {
-    canvas = createCanvas(400, 700);
+    canvas = createCanvas(width, height);
+
+    width = windowWidth;
+    height = windowHeight;
+
+
 
     database = firebase.database();
     backgroundSound.loop();
@@ -156,6 +161,12 @@ function draw() {
     setButtonColour();
     setScore();
     // console.log(gamestate);
+
+    width = windowWidth;
+    height = windowHeight;
+
+    resizeCanvas(width, height)
+
     if (!paused) {
         // function gator() { alert('Alligator!!!!'); } setTimeout(gator, 7000);
         background("#cef4ff");
@@ -171,10 +182,10 @@ function draw() {
             dustbin.x = 200;
             wheel.x = dustbin.x - 13
             hero.x = dustbin.x - 70;
-
+            imageMode(CENTER);
             startButton.style("visibility", "visible");
             junkStoreButton.style("visibility", "visible");
-            image(logo, 50, 50, 300, 100);
+            image(logo, width / 2, 50, 300, 100);
             setHeroBehaviour();
             textSize(12);
             if (frameCount >= 60) {
@@ -200,11 +211,11 @@ function draw() {
         }
         if (gamestate === "play") {
             spawnGarbage();
-            mouseControl()
+            dustbinControl()
             createToxic();
             scoreDisplay();
             showStarBar();
-           
+
             // soundPlay();
             if (garbageGroup.length >= totalDrop) {
                 setTimeout(over, 3000);
