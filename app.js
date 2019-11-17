@@ -50,7 +50,7 @@ function scoreDisplay() {
 }
 function createButtons() {
     startButton = createButton("PLAY");
-    startButton.position(160, 200);
+    startButton.position(width / 2 - 50, 200);
     startButton.style("visibility", "hidden");
     startButton.class("startButtons");
     startButton.mousePressed(function () {
@@ -65,7 +65,7 @@ function createButtons() {
         click.play();
     });
     junkStoreButton = createButton("JUNK STORE");
-    junkStoreButton.position(160, 250);
+    junkStoreButton.position(width / 2 - 50, 250);
     junkStoreButton.style("visibility", "hidden");
     junkStoreButton.class("startButtons");
     junkStoreButton.mousePressed(function () {
@@ -106,6 +106,8 @@ function createButtons() {
         mainMenuButton.style("visibility", "hidden");
         exitPauseMenuButton.style("visibility", "hidden");
         soundButton.style("visibility", "hidden");
+        soundButton1.style("visibility", "hidden");
+        soundButton2.style("visibility", "hidden");
         reset();
     });
 
@@ -246,10 +248,10 @@ function createButtons() {
         }
         click.play();
     })
-    para = createP("Help the slum hero to collect all the garbage.Swipe your finger to control the hero and try to catch all the garbage.  ");
+    para = createP("Help the slum hero to collect all the <br>garbage.Swipe your finger to control <br>the hero and try to catch all the garbage.  ");
     para.position(85, 300);
     para.style("visibility", "hidden");
-    para2 = createP("Warning!!! Do not catch the toxic waste as they are harmfull.They are always bounded by a red boundary");
+    para2 = createP("Warning!!! Do not catch the toxic waste<br> as they are harmfull.They are always <br>bounded by a red boundary");
     para2.position(85, 400);
     para2.style("visibility", "hidden");
 
