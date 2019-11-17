@@ -190,7 +190,7 @@ function draw() {
             textSize(12);
             if (frameCount >= 60) {
                 fill(0);
-                image(bubble, hero.x + 170, hero.y - 50, 300, 160);
+                image(bubble, hero.x + 100, hero.y - 160, 300, 160);
                 text("Welcome to the slum", hero.x - 20, 380);
                 if (frameCount >= 80) {
                     if (welcomePlayed === false) {
