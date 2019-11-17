@@ -176,10 +176,10 @@ function draw() {
         rect(200, 660, 400, 10);
 
         catchGarbage();
-
+        console.log(startButton.width, junkStoreButton.width);
         if (gamestate === "start") {
 
-            dustbin.x = 200;
+            dustbin.x = width / 2;
             wheel.x = dustbin.x - 13
             hero.x = dustbin.x - 70;
             imageMode(CENTER);
@@ -190,8 +190,8 @@ function draw() {
             textSize(12);
             if (frameCount >= 60) {
                 fill(0);
-                image(bubble, 100, 330, 300, 160);
-                text("Welcome to the slum", 130, 380);
+                image(bubble, hero.x + 100, hero.y - 160, 300, 160);
+                text("Welcome to the slum", hero.x - 20, 380);
                 if (frameCount >= 80) {
                     if (welcomePlayed === false) {
                         welcome.setVolume(volume2);
@@ -200,9 +200,9 @@ function draw() {
                     }
 
                     if (frameCount >= 160) {
-                        text("Click 'PLAY' to start catching junk drops ", 130, 400);
+                        text("Click 'PLAY' to start catching junk drops ", hero.x - 20, 400);
                         if (frameCount >= 220) {
-                            text("Or click 'JUNK STORE' to visit 'kabadiwala'", 130, 420)
+                            text("Or click 'JUNK STORE' to visit 'kabadiwala'", hero.x - 20, 420)
                         }
                     }
                 }
