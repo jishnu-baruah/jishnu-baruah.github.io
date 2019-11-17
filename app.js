@@ -50,9 +50,9 @@ function scoreDisplay() {
 }
 function createButtons() {
     startButton = createButton("PLAY");
-    startButton.position(width / 2 - 100, 200);
-    startButton.style("visibility", "hidden");
     startButton.class("startButtons");
+    startButton.position((width - 100) / 2, 200);
+    startButton.style("visibility", "hidden");
     startButton.mousePressed(function () {
         gamestate = "play";
         settingsButton.style("visibility", "hidden");
@@ -65,9 +65,9 @@ function createButtons() {
         click.play();
     });
     junkStoreButton = createButton("JUNK STORE");
-    junkStoreButton.position(width / 2 - 50, 250);
-    junkStoreButton.style("visibility", "hidden");
     junkStoreButton.class("startButtons");
+    junkStoreButton.position((width - junkStoreButton.width) / 2, 250);
+    junkStoreButton.style("visibility", "hidden");
     junkStoreButton.mousePressed(function () {
         gamestate = "junkPlay";
         click.play();
