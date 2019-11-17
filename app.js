@@ -50,7 +50,7 @@ function scoreDisplay() {
 }
 function createButtons() {
     startButton = createButton("PLAY");
-    startButton.position(width / 2 - 50, 200);
+    startButton.position(width / 2 - 100, 200);
     startButton.style("visibility", "hidden");
     startButton.class("startButtons");
     startButton.mousePressed(function () {
