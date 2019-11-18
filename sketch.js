@@ -215,7 +215,7 @@ function draw() {
         }
         if (gamestate === "play") {
             spawnGarbage();
-            dustbinControl()
+            mouseControl()
             createToxic();
             scoreDisplay();
             showStarBar();
