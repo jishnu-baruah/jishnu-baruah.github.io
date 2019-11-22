@@ -124,9 +124,9 @@ function createButtons() {
 
 
 
-    nextLevelButton = createButton("Next");
-    nextLevelButton.class("minorButtons");
-    // nextLevelButton.style("width", 100)
+//     nextLevelButton = createButton("Next");
+//     nextLevelButton.class("minorButtons");
+//     // nextLevelButton.style("width", 100)
 
     pauseButton = createButton("II");
     pauseButton.position(20, 20);
