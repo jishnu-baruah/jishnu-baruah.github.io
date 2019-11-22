@@ -236,7 +236,7 @@ function draw() {
                 setTimeout(over, 3000);
                 pauseButton.style("visibility", "hidden");
                 //gamestate = "over"
-            } if (destroyCount >= 3099) {
+            } if (destroyCount >= 3) {
                 setTimeout(loose, 1000);
                 pauseButton.style("visibility", "hidden");
             }
