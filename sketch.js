@@ -13,14 +13,15 @@ var replayButton, mainMenuButton;
 var pauseButton, soundButton, settingsButton, exitPauseMenuButton, exitSettingsButton;
 var previousNo = 0;
 var paused = false;
-var totalDrop = 50;
+var totalDrop = 100;
 var totalGarbage = 0;
-var gcircle, gcircleGroup;
+var gcircleGroup;
 var p1 = p2 = p3 = p4 = false;
 var volume = 0;
 var volume2 = 1;
 var soundButton1, soundButton2;
 var highscore = 0;
+
 var preState;
 var database;
 var stat, stat2;
@@ -28,6 +29,9 @@ var para, para2;
 var battery;
 
 var width, height;
+var destroyCount = 0;
+
+var roof;
 
 function preload() {
     bottleImg = loadImage("bottle.png");
@@ -100,6 +104,9 @@ function preload() {
     dada = loadSound("da da da.wav");
     ting = loadSound("ting.wav");
     tutu = loadSound("tutu.wav");
+    bin = loadImage("bin.png");
+
+    dump = loadImage("dump.png");
 
 }
 
@@ -148,16 +155,19 @@ function setup() {
 
 
 function draw() {
+
     barFace.visible = false;
     backgroundSound.setVolume(volume);
     setEfxVolume();
     setButtonColour();
     setScore();
+    setHeroBehaviour();
     // console.log(gamestate);
 
     width = windowWidth;
     height = windowHeight;
     dustbin.y = height - 90;
+    dustbin.velocityX = 0;
     hero.y = dustbin.y - 40;
     wheel.y = dustbin.y + 56;
     ground.y = hero.y + 100;
@@ -179,7 +189,7 @@ function draw() {
         rect(width / 2, hero.y + 90, width, 10);
 
         catchGarbage();
-        console.log(startButton.width, junkStoreButton.width);
+        // console.log(startButton.width, junkStoreButton.width);
         if (gamestate === "start") {
             startButton.position((width - 100) / 2, height / 4);
             junkStoreButton.position((width - 100) / 2, (height / 4) + 50);
@@ -189,7 +199,7 @@ function draw() {
             imageMode(CENTER);
             startButton.style("visibility", "visible");
             junkStoreButton.style("visibility", "visible");
-            image(logo, width / 2, 50, 300, 100);
+            image(logo, width / 2, 80, 260, 80);
             setHeroBehaviour();
             textSize(12);
             if (frameCount >= 60) {
@@ -214,9 +224,10 @@ function draw() {
 
         }
         if (gamestate === "play") {
-            spawnGarbage();
-            mouseControl()
-            createToxic();
+            spawnGarbage(15, 15);
+            mouseControl();
+            // swipeControl();
+            createToxic(180, 9);
             scoreDisplay();
             showStarBar();
 
@@ -225,7 +236,11 @@ function draw() {
                 setTimeout(over, 3000);
                 pauseButton.style("visibility", "hidden");
                 //gamestate = "over"
+            } if (destroyCount >= 3099) {
+                setTimeout(loose, 1000);
+                pauseButton.style("visibility", "hidden");
             }
+
             // for (var i = 0; i <= garbageGroup.length; i++) {
             //     var temp = garbageGroup.get(i);
             //     if (temp !== undefined) {
@@ -239,6 +254,9 @@ function draw() {
             displayMiniMenu();
         } if (gamestate === "settings") {
             displaySettingsMenu();
+        } if (gamestate === "loose") {
+            displayLooserMenu();
+            dustbin.velocityX = 0;
         }
         if (gamestate === "sound") {
             displaySoundMenu();
@@ -247,9 +265,10 @@ function draw() {
                 displaySettingsMenu();
                 text(stat, soundButton.x + 100, soundButton1.y + 5);
                 text(stat2, soundButton.x + 100, soundButton2.y + 5);
-            } else if (preState === "pause") {
-                alert("working")
-                displayMiniMenu();
+            } else if (preState === "over") {
+                displayOverMenu()
+            } else if (preState === "loose") {
+                displayLooserMenu();
             }
         }
 
@@ -281,11 +300,11 @@ function draw() {
 
     }
     if (paused) {
+        background("#cef4ff");
         displayMiniMenu();
         if (gamestate === "sound") {
             displaySoundMenu();
-
-            displayMiniMenu();
+            //  displayMiniMenu();
         }
     }
 
@@ -358,6 +377,11 @@ function getBarFace() {
 }
 function over() {
     gamestate = "over";
+    toxicGroup.destroyEach();
+    gcircleGroup.destroyEach();
+    //  alert("wooho");
+} function loose() {
+    gamestate = "loose";
     toxicGroup.destroyEach();
     gcircleGroup.destroyEach();
     //  alert("wooho");

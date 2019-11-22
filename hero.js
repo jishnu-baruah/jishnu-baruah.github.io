@@ -11,10 +11,16 @@ function catchGarbage() {
             if (temp.isTouching(ground)) {
 
                 temp.velocityY = 0;
-                temp.life = 3;
+                function destroyTemp() {
+                    if (temp !== undefined) {
+                        temp.destroy();
+                    }
+                }
+                setTimeout(destroyTemp, 1000);
 
 
-                console.log(temp)
+
+                // console.log(temp)
                 if (temp.isTouching(ground) === false) {
                     totalGarbage++;
                 }
@@ -53,7 +59,14 @@ function catchGarbage() {
 
             }
         }
+        // if (temp !== undefined) {
+        //     if (temp.isTouching(roof)) {
+        //         // alert("touching");
+        //         temp.velocityY = 0;
+        //     }
+        // }
     }
+
 }
 function setHeroBehaviour() {
     if (frameCount % 20 === 0) {
@@ -123,7 +136,7 @@ function mouseControl() {
     dustbin.x = World.mouseX
     wheel.x = dustbin.x - 13
     hero.x = dustbin.x - 70;
-    console.log("#", dustbin.velocityX);
+    // console.log("#", dustbin.velocityX);
     if (dustbin.velocityX < 0) {
         // dustbin.velocityX = -7;
         wheel.rotationSpeed = -9;
@@ -137,18 +150,52 @@ function mouseControl() {
         hero.changeAnimation("walkingf");
     }
 
-    if (dustbin.x < 200) {
-        // dustbin.velocityX = -7;
-        wheel.rotationSpeed = -9;
-        hero.changeAnimation("walkingb");
-    } if (dustbin.x === 0) {
-        //  dustbin.velocityX = 0;
-        wheel.rotationSpeed = 0;
-        setHeroBehaviour();
-    } if (dustbin.x > 200) {
-        //  dustbin.velocityX = -7;
+    // if (dustbin.x < 200) {
+    //     // dustbin.velocityX = -7;
+    //     wheel.rotationSpeed = -9;
+    //     hero.changeAnimation("walkingb");
+    // } if (dustbin.x === 0) {
+    //     //  dustbin.velocityX = 0;
+    //     wheel.rotationSpeed = 0;
+    //     setHeroBehaviour();
+    // } if (dustbin.x > 200) {
+    //     //  dustbin.velocityX = -7;
+    //     wheel.rotationSpeed = 9;
+    //     hero.changeAnimation("walkingf");
+    // }
+
+}
+
+function getDirection() {
+    var first = touches[0].x;
+    var last = touches[touches.length - 1].x;
+    var diff = last - first;
+    if (diff < 0) {
+        return ("left");
+    } else if (diff > 0) {
+        return ("right");
+    } else if (diff = 0) {
+        return ("no direction")
+    }
+}
+
+function swipeControl() {
+    var direction = getDirection();
+    if (direction = "left") {
+        dustbin.velocityX = 7;
         wheel.rotationSpeed = 9;
         hero.changeAnimation("walkingf");
+        touches = [];
+    } else if (direction = "right") {
+        dustbin.velocityX = -7;
+        //  wheel.velocityX = -7;
+        wheel.rotationSpeed = -9;
+        hero.changeAnimation("walkingb");
+        touches = [];
+    } else if (direction = "no direction") {
+        dustbin.velocityX = 0;
+        wheel.rotationSpeed = 0;
+        setHeroBehaviour();
+        touches = [];
     }
-
 }

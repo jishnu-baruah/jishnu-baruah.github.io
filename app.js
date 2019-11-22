@@ -20,17 +20,25 @@ function setType(typeNo) {
 }
 
 function scoreDisplay() {
+    var x = width / 2 + 155;
     noFill();
     stroke("#13316c");
     strokeWeight(2);
-    rect(width / 2, 22, 330, 30);
+    rect(width / 2, 22, 320, 30);
     fill("#13316c");
     noStroke();
-    textSize(20);
+    textSize(18);
     //  fill("red");
-    text("SCORE : " + score, width / 2 - 160, 30);
+    text("SCORE : " + score, width / 2 - 140, 30);
     // fill("white");
-    text("COLLECTED : " + collected + "/" + garbageGroup.length, width / 2 - 20, 30);
+    text("COLLECTED : " + collected + "/" + garbageGroup.length, width / 2 - 25, 30);
+    image(bin, x, -5, 40, 50);
+    fill("white");
+    circle(x + 23, 23, 25);
+    var lives = 3 - destroyCount;
+    fill("black");
+    text(lives, x + 18, 30);
+    console.log(lives);
     // fill("blue");
     // noFill();
     // strokeWeight(0.3);
@@ -59,6 +67,8 @@ function createButtons() {
         startButton.style("visibility", "hidden");
         junkStoreButton.style("visibility", "hidden");
         pauseButton.style("visibility", "visible");
+        mainMenuButton.style("visibility", "hidden");
+        replayButton.style("visibility", "hidden");
         garbageGroup = createGroup();
         reset();
         paused = false;
@@ -85,6 +95,7 @@ function createButtons() {
         soundButton.style("visibility", "hidden");
         soundButton1.style("visibility", "hidden");
         soundButton2.style("visibility", "hidden");
+
         paused = false;
         gamestate = "play";
         reset();
@@ -111,6 +122,11 @@ function createButtons() {
         reset();
     });
 
+
+
+    nextLevelButton = createButton("Next");
+    nextLevelButton.class("minorButtons");
+    // nextLevelButton.style("width", 100)
 
     pauseButton = createButton("II");
     pauseButton.position(20, 20);
@@ -177,6 +193,8 @@ function createButtons() {
         soundButton2.style("visibility", "hidden");
         para.style("visibility", "hidden");
         para2.style("visibility", "hidden");
+
+        click.play();
     });
 
     soundButton = createButton("🔈");
@@ -191,7 +209,7 @@ function createButtons() {
             soundButton1.style("visibility", "hidden");
             soundButton2.style("visibility", "hidden");
         }
-        else if (gamestate === "settings" || gamestate === "pause") {
+        else if (gamestate === "settings" || gamestate === "pause" || gamestate === "over" || gamestate === "loose") {
             preState = gamestate;
             gamestate = "sound";
 
@@ -203,7 +221,6 @@ function createButtons() {
     })
 
     soundButton1 = createButton("Background");
-
     soundButton1.class("sound");
     soundButton1.style("visibility", "hidden");
     soundButton1.mousePressed(function () {
@@ -226,7 +243,7 @@ function createButtons() {
         }
         click.play();
     })
-    soundButton2 = createButton("Efx");
+    soundButton2 = createButton("Effects");
 
     soundButton2.class("sound");
     soundButton2.style("visibility", "hidden");
@@ -254,8 +271,6 @@ function createButtons() {
     para2 = createP("Warning!!! Do not catch the toxic waste<br> as they are harmfull.They are always <br>bounded by a red boundary");
     para2.position(85, 400);
     para2.style("visibility", "hidden");
-
-
 }
 
 
@@ -286,12 +301,15 @@ function createSprites() {
     hero.addAnimation("walkingf", heroImg5);
     hero.addAnimation("blink", heroImg3);
     hero.addAnimation("stare", heroImg4);
-
     hero.scale = 0.3;
-
 
     ground = createSprite(width / 2, hero.y + 100, width, 10);
     ground.visible = false;
+
+    roof = createSprite(width / 2, 100, width, 1);
+    roof.visible = false;
+
+
     barFace = createSprite(350, 50);
     barFace.addAnimation("1", faceBlink1);
     barFace.scale = 0.22;
@@ -392,6 +410,7 @@ function displaySettingsMenu() {
 
 function reset() {
     garbageGroup = createGroup();
+    toxicGroup = createGroup();
     typeList = [];
 
     totalGarbage = 0;
@@ -402,6 +421,7 @@ function reset() {
     paper = 0;
     plastic = 0;
     collected = 0;
+    destroyCount = 0;
 
     p1 = p2 = p3 = p4 = false;
 }
@@ -432,6 +452,7 @@ function setButtonColour() {
     }
 }
 function displayOverMenu() {
+
     var x = width / 2 - 110;
     var y = height / 2 - 150;
     fill("#fbe843");
@@ -451,7 +472,46 @@ function displayOverMenu() {
     text("Paper caught : " + paper, x, y + 180);
     text("Organic caught : " + organic, x, y + 210);
 
+    mainMenuButton.style("visibility", "visible");
+    replayButton.style("visibility", "visible");
+    mainMenuButton.position(width / 2 - 130, height / 2 + 90);
+    replayButton.position(width / 2 + 20, height / 2 + 90);
+
+    soundButton.style("visibility", "visible");
+    soundButton.position(width / 2 + 130, y - 95);
+    soundButton1.position(soundButton.x + 10, soundButton.y + 30);
+    soundButton2.position(soundButton.x + 10, soundButton.y + 60);
+}
+function displayLooserMenu() {
+    var x = width / 2 - 110;
+    var y = height / 2 - 150;
+    fill("#fbe843");
+    stroke("#13316c");
+    rect(width / 2, height / 2 - 70, 300, 380);
+    fill("#13316c");
+    textSize(50);
+    strokeWeight(1);
+    text("Lives over", width / 2 - 120, y - 50);
+    textSize(20);
+    text("Collected : " + collected + "/" + totalDrop, x, y);
+    text("Score : " + score, x, y + 30);
+    text("Highscore : " + highscore, x, y + 60);
+    text("Plastic caught : " + plastic, x, y + 90);
+    text("Glass caught : " + glass, x, y + 120);
+    text("Metal caught : " + metal, x, y + 150);
+    text("Paper caught : " + paper, x, y + 180);
+    text("Organic caught : " + organic, x, y + 210);
+
+    mainMenuButton.style("visibility", "visible");
+    replayButton.style("visibility", "visible");
+
+    soundButton.style("visibility", "visible");
+    soundButton.position(width / 2 + 130, y - 95);
+    soundButton1.position(soundButton.x + 10, soundButton.y + 30);
+    soundButton2.position(soundButton.x + 10, soundButton.y + 60);
 
     mainMenuButton.position(width / 2 - 130, height / 2 + 90);
     replayButton.position(width / 2 + 20, height / 2 + 90);
 }
+
+
