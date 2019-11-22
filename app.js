@@ -124,9 +124,9 @@ function createButtons() {
 
 
 
-//     nextLevelButton = createButton("Next");
-//     nextLevelButton.class("minorButtons");
-//     // nextLevelButton.style("width", 100)
+    nextLevelButton = createButton("Next");
+    nextLevelButton.class("minorButtons");
+    // nextLevelButton.style("width", 100)
 
     pauseButton = createButton("II");
     pauseButton.position(20, 20);
@@ -479,7 +479,7 @@ function displayOverMenu() {
 
     soundButton.style("visibility", "visible");
     soundButton.position(width / 2 + 120, y - 95);
-    soundButton1.position(soundButton.x, soundButton.y + 30);
+    soundButton1.position(soundButton.x - 5, soundButton.y + 30);
     soundButton2.position(soundButton.x, soundButton.y + 60);
 }
 function displayLooserMenu() {
@@ -507,7 +507,7 @@ function displayLooserMenu() {
 
     soundButton.style("visibility", "visible");
     soundButton.position(width / 2 + 120, y - 95);
-    soundButton1.position(soundButton.x, soundButton.y + 30);
+    soundButton1.position(soundButton.x - 5, soundButton.y + 30);
     soundButton2.position(soundButton.x, soundButton.y + 60);
 
     mainMenuButton.position(width / 2 - 130, height / 2 + 90);
