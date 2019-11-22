@@ -167,8 +167,8 @@ function mouseControl() {
 }
 
 function getDirection() {
-    var first = touches[0].x;
-    var last = touches[touches.length - 1].x;
+    var first = touches[0];
+    var last = touches[touches.length - 1];
     var diff = last - first;
     if (diff < 0) {
         return ("left");

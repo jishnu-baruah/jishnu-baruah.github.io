@@ -20,7 +20,7 @@ function setType(typeNo) {
 }
 
 function scoreDisplay() {
-    var x = width / 2 + 95;
+    var x = width / 2 + 115;
     noFill();
     stroke("#13316c");
     strokeWeight(2);
@@ -124,8 +124,8 @@ function createButtons() {
 
 
 
-//     nextLevelButton = createButton("Next");
-//     nextLevelButton.class("minorButtons");
+    nextLevelButton = createButton("Next");
+    nextLevelButton.class("minorButtons");
     // nextLevelButton.style("width", 100)
 
     pauseButton = createButton("II");

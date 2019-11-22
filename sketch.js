@@ -155,7 +155,7 @@ function setup() {
 
 
 function draw() {
-
+    console.log(touches)
     barFace.visible = false;
     backgroundSound.setVolume(volume);
     setEfxVolume();
@@ -225,6 +225,7 @@ function draw() {
         }
         if (gamestate === "play") {
             spawnGarbage(15, 15);
+            dustbinControl();
             mouseControl();
             // swipeControl();
             createToxic(180, 9);
