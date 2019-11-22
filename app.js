@@ -20,16 +20,16 @@ function setType(typeNo) {
 }
 
 function scoreDisplay() {
-    var x = width / 2 + 155;
+    var x = width / 2 + 125;
     noFill();
     stroke("#13316c");
     strokeWeight(2);
-    rect(width / 2, 22, 320, 30);
+    rect(width / 2, 22, 280, 30);
     fill("#13316c");
     noStroke();
-    textSize(18);
+    textSize(17);
     //  fill("red");
-    text("SCORE : " + score, width / 2 - 140, 30);
+    text("SCORE : " + score, width / 2 - 130, 30);
     // fill("white");
     text("COLLECTED : " + collected + "/" + garbageGroup.length, width / 2 - 25, 30);
     image(bin, x, -5, 40, 50);
@@ -478,9 +478,9 @@ function displayOverMenu() {
     replayButton.position(width / 2 + 20, height / 2 + 90);
 
     soundButton.style("visibility", "visible");
-    soundButton.position(width / 2 + 130, y - 95);
-    soundButton1.position(soundButton.x + 10, soundButton.y + 30);
-    soundButton2.position(soundButton.x + 10, soundButton.y + 60);
+    soundButton.position(width / 2 + 120, y - 95);
+    soundButton1.position(soundButton.x, soundButton.y + 30);
+    soundButton2.position(soundButton.x, soundButton.y + 60);
 }
 function displayLooserMenu() {
     var x = width / 2 - 110;
@@ -506,9 +506,9 @@ function displayLooserMenu() {
     replayButton.style("visibility", "visible");
 
     soundButton.style("visibility", "visible");
-    soundButton.position(width / 2 + 130, y - 95);
-    soundButton1.position(soundButton.x + 10, soundButton.y + 30);
-    soundButton2.position(soundButton.x + 10, soundButton.y + 60);
+    soundButton.position(width / 2 + 120, y - 95);
+    soundButton1.position(soundButton.x, soundButton.y + 30);
+    soundButton2.position(soundButton.x, soundButton.y + 60);
 
     mainMenuButton.position(width / 2 - 130, height / 2 + 90);
     replayButton.position(width / 2 + 20, height / 2 + 90);
