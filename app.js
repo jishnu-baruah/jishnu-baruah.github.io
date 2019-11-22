@@ -20,7 +20,7 @@ function setType(typeNo) {
 }
 
 function scoreDisplay() {
-    var x = width / 2 + 105;
+    var x = width / 2 + 185;
     noFill();
     stroke("#13316c");
     strokeWeight(2);
