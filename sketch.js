@@ -224,7 +224,7 @@ function draw() {
 
         }
         if (gamestate === "play") {
-            spawnGarbage(15, 25);
+            spawnGarbage(15, 20);
             mouseControl();
             // swipeControl();
             createToxic(180, 9);
