@@ -1,18 +1,39 @@
-function spawnGarbage() {
+function spawnGarbage(frameNo, velocity) {
+    if (frameNo === undefined) {
+        frameNo = 30;
+    }
+    if (velocity === undefined) {
+        velocity = 7;
+    }
+    var location = 100;
+    function speed() {
+        if (velocity > 0) {
+            return (true);
+            location = 100
+        } else if (velocity < 0) {
+            // rectMode(CENTER);
+            rect(width / 2, 100, 400, 5);
+            imageMode(CENTER);
+            image(dump, width / 2, height - 60, 400, 70);
+            location = height - 100
+            return (false);
+        }
+    }
+    speed();
     var no = getRandomNo(5, 9);
     var imageNo = getRandomNo(1, 4);
     // no = 1;
     // imageNo = 2;
-    if (frameCount % 30 === 0 && garbageGroup.length < totalDrop) {
+    if (frameCount % frameNo === 0 && garbageGroup.length < totalDrop) {
         swoosh.setVolume(2);
         swoosh.play();
-        var garbage = createSprite(100, 100, 10, 10);
+        var garbage = createSprite(100, location, 10, 10);
         garbage.x = Math.round(random(width / 2 - 150, width / 2 + 150));
-        garbage.velocityY = 7;
+        garbage.velocityY = velocity;
         garbage.scale = 0.15;
         garbage.depth = dustbin.depth - 1;
         garbage.lifetime = 88;
-        console.log(garbage);
+        // console.log(garbage);
         var type = setType(no);
         if (no === 5) {
             garbage.shapeColor = (rgb(50, 0, 0));
@@ -94,8 +115,13 @@ function spawnGarbage() {
 
             }
         }
+        if (speed() === true) {
+            garbage.rotationSpeed = Math.round(random(-15, 15));
+        } if (speed() === false) {
+            garbage.rotationSpeed = 0;
 
-        garbage.rotationSpeed = Math.round(random(-15, 15));
+        }
+
         typeList.push(type);
         garbageGroup.push(garbage);
         //  garbageGroup.setLifetimeEach(32);
@@ -103,13 +129,33 @@ function spawnGarbage() {
         // camera.position.y = 700;
     }
     // garbageGroup.bounceOff(dustbin);
+    imageMode(CORNER);
 }
 
-function createToxic() {
+function createToxic(frameNo, velocity) {
+    if (frameNo === undefined) {
+        frameNo = 180;
+    }
+    if (velocity === undefined) {
+        velocity = 7;
+    }
+    var location = 100;
+    function speed() {
+        if (velocity > 0) {
+            return (true);
+            location = 100
+        } else if (velocity < 0) {
+
+
+            location = height - 100
+            return (false);
+        }
+    }
+    speed();
     var no = Math.round(random(1, 2));
-    if (frameCount % 180 === 0) {
-        var toxic = createSprite(100, 100);
-        toxic.x = Math.round(random(width / 2 - 150, width + 150));
+    if (frameCount % frameNo === 0) {
+        var toxic = createSprite(100, location);
+        toxic.x = Math.round(random(width / 2 - 150, width / 2 + 150));
         toxic.addImage("toxic", toxicImg);
         toxic.addImage("battery", battery);
         if (no === 1) {
@@ -120,14 +166,14 @@ function createToxic() {
 
         }
         toxic.scale = 0.05;
-        toxic.lifetime = 80;
+        // toxic.lifetime = 80;
         toxic.depth = dustbin.depth - 1;
-        toxic.velocityY = 7;
+        toxic.velocityY = velocity;
         toxic.rotationSpeed = Math.round(random(-15, 15));
         toxicGroup.push(toxic);
-        gcircle = createSprite(toxic.x, toxic.y);
+        var gcircle = createSprite(toxic.x, toxic.y);
         gcircle.velocityY = toxic.velocityY;
-        gcircle.lifetime = 80;
+        // gcircle.lifetime = 80;
         gcircle.scale = 0.3;
         gcircle.addAnimation("1", gcircleImg);
         gcircle.rotationSpeed = 2;
@@ -152,7 +198,19 @@ function createToxic() {
                     o_ou.play();
                     dustbin.changeAnimation("toxic");
                     score = score - 1;
+                    destroyCount++
                 }
+            }
+            if (temp.isTouching(ground)) {
+                temp.destroy();
+                temp2.destroy();
+
+                temp.rotationSpeed = 0;
+                temp2.rotationSpeed = 0;
+
+
+
+
             }
         }
         if (temp2 !== undefined) {
@@ -160,6 +218,23 @@ function createToxic() {
                 //dustbin.destroy();
                 temp2.destroy();
                 // alert("woho");
+            }
+            if (temp2.isTouching(ground)) {
+
+
+                // setTimeout(destroyTemp2, 100);
+            }
+        }
+        function destroyTemp2() {
+            if (temp2 !== undefined) {
+                temp2.destroy();
+                // temp2.velocityY = -7;
+            }
+        }
+        function destroyTemp() {
+            if (temp !== undefined) {
+                temp2.destroy();
+                // temp.velocityY = -7;
             }
         }
     }
